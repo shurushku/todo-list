@@ -19,7 +19,7 @@ class Task(models.Model):
     tags = models.ManyToManyField(to=Tag, related_name="tags")
 
     class Meta:
-        ordering = ["content"]
+        ordering = ["done", "-datetime"]
 
     def __str__(self) -> str:
         return self.content
