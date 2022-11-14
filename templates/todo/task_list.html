@@ -11,12 +11,30 @@
   {% if task_list %}
 
     {% for task in task_list %}
-      <strong>{{ task.content }}</strong> {% if task.done %}Done{% else %} Not done{% endif %}
+      <h5 class="font-weight-bold">
+        {{ task.content }}
+        {% if task.done %}
+          <span style="color: green">Done</span>
+        {% else %}
+          <span style="color: red">Not done</span>
+        {% endif %}
+        {% if task.done %}
+          <a href="{% url 'todo:toggle-task' pk=task.id %}" class="btn btn-secondary link-to-page float-right">
+            Undo
+          </a>
+        {% else %}
+          <a href="{% url 'todo:toggle-task' pk=task.id %}" class="btn btn-success link-to-page float-right">
+            Complete
+          </a>
+        {% endif %}
+      </h5>
       <p>
         Created: {{ task.datetime }}
-        Deadline: {% if task.deadline %}{{ task.deadline }}{% endif %}
+        <span style="color: darkred">
+          {% if task.deadline %}Deadline: {{ task.deadline }}{% endif %}
+        </span>
       </p>
-      <p>
+      <p style="color: darkgrey">
         Tags: {{ task.tags.all| join:" " }}
         <a href="{% url 'todo:task-update' pk=task.id %}">
           Update
@@ -25,15 +43,6 @@
           Delete
         </a>
       </p>
-      {% if task.done %}
-        <a href="{% url 'todo:toggle-task' pk=task.id %}" class="btn btn-secondary link-to-page">
-          Undo
-        </a>
-      {% else %}
-        <a href="{% url 'todo:toggle-task' pk=task.id %}" class="btn btn-success link-to-page">
-          Complete
-        </a>
-      {% endif %}
       <hr>
     {% endfor %}
 

@@ -1,5 +1,4 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -49,7 +48,7 @@ class TagDeleteView(generic.DeleteView):
     success_url = reverse_lazy("todo:tag-list")
 
 
-def toggle_task(request, pk):
+def toggle_task(request, pk: int):
     task = Task.objects.get(id=pk)
     if task.done:
         task.done = False
